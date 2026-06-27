@@ -1,0 +1,126 @@
+.financeiro-container {
+  animation: fadeIn 0.3s ease-out;
+}
+
+.commission-stats {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
+.stat-card-total {
+  background: linear-gradient(135deg, var(--laranja-escuro), var(--laranja-claro));
+  padding: 25px;
+  border-radius: 15px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  color: white;
+}
+
+.stat-icon-total {
+  width: 60px;
+  height: 60px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.stat-value-total {
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.commission-breakdown {
+  background: white;
+  padding: 25px;
+  border-radius: 15px;
+}
+
+.commission-breakdown h3 {
+  margin-bottom: 20px;
+  color: var(--laranja-escuro);
+  font-size: 16px;
+}
+
+.breakdown-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
+}
+
+.breakdown-card {
+  padding: 20px;
+  border-radius: 12px;
+  text-align: center;
+  color: white;
+}
+
+.breakdown-card h4 {
+  font-size: 13px;
+  margin-bottom: 10px;
+}
+
+.percentage {
+  font-size: 22px;
+  font-weight: bold;
+  margin: 5px 0;
+}
+
+.amount {
+  font-size: 14px;
+}
+
+.transactions-section {
+  background: white;
+  border-radius: 15px;
+  padding: 25px;
+}
+
+.transactions-section h3 {
+  margin-bottom: 20px;
+  color: var(--laranja-escuro);
+}
+
+.transaction-card {
+  border: 1px solid var(--cinza-claro);
+  border-radius: 12px;
+  padding: 15px;
+  margin-bottom: 15px;
+}
+
+.transaction-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.transaction-header h5 {
+  font-size: 16px;
+  color: var(--laranja-escuro);
+}
+
+.transaction-value {
+  font-weight: bold;
+  color: var(--preto);
+}
+
+.transaction-details {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  padding: 10px 0;
+  border-top: 1px solid var(--cinza-claro);
+  border-bottom: 1px solid var(--cinza-claro);
+  font-size: 13px;
+}
+
+.transaction-commission {
+  margin-top: 10px;
+  font-weight: bold;
+  color: var(--laranja-escuro);
+}
