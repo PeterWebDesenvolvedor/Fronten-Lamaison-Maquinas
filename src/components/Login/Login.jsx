@@ -1,30 +1,30 @@
-import React, { useState } from 'react';
-import { useAuth } from '../../contexts/AuthContext';
-import { useNavigate } from 'react-router-dom';
-import './Login.css';
+import React, { useState } from "react";
+import { useAuth } from "../../contexts/useAuth";
+import { useNavigate } from "react-router-dom";
+import "./Login.css";
 
 const Login = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const { login } = useAuth();
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError('');
+    setError("");
     setLoading(true);
 
     try {
       const user = await login(email, password);
-      if (user.role === 'ADMIN') {
-        navigate('/admin/dashboard');
+      if (user.role === "ADMIN") {
+        navigate("/admin/dashboard");
       } else {
-        navigate('/app/dashboard');
+        navigate("/app/dashboard");
       }
     } catch (err) {
-      setError(err.response?.data?.message || 'E-mail ou senha inválidos.');
+      setError(err.response?.data?.message || "E-mail ou senha inválidos.");
     } finally {
       setLoading(false);
     }
@@ -67,7 +67,7 @@ const Login = () => {
           {error && <div className="error-message">{error}</div>}
 
           <button type="submit" className="btn-primary" disabled={loading}>
-            {loading ? 'Entrando...' : 'Entrar'}
+            {loading ? "Entrando..." : "Entrar"}
           </button>
         </form>
       </div>
