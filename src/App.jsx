@@ -1,6 +1,6 @@
 import React, { useState, lazy, Suspense } from "react";
 import { Routes, Route, Navigate, useNavigate } from "react-router-dom";
-import { useAuth } from "./contexts/UseAuth";
+import { useAuth } from "./contexts/useAuth";
 import "./styles/global.css";
 
 const Login = lazy(() => import("./components/Login/Login"));
@@ -31,8 +31,8 @@ function App() {
     }
   };
 
-  const handleLogout = () => {
-    logout();
+  const handleLogout = async () => {
+    await logout(); // now async: calls backend to clear the httpOnly cookie
     navigate("/login");
   };
 

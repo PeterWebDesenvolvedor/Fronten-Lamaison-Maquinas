@@ -1,41 +1,48 @@
-import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState, useEffect, useCallback } from "react";
+import { authService } from "../api/auth";
 import AuthContext from "./AuthContext";
 
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
-  const navigate = useNavigate();
 
   useEffect(() => {
-    const loadUser = async () => {
+    // No user/token in localStorage anymore — the only source of truth is
+    // the httpOnly refresh cookie, so we ask the backend on every app load.
+    const bootstrap = async () => {
       try {
-        const token = localStorage.getItem("accessToken");
-        const storedUser = localStorage.getItem("user");
-
-        if (token && storedUser) {
-          const userData = JSON.parse(storedUser);
-          setUser({
-            ...userData,
-            isAdmin: userData.role === "ADMIN",
-          });
-        }
-      } catch (error) {
-        console.error("Erro ao carregar usuário:", error);
-        localStorage.removeItem("accessToken");
-        localStorage.removeItem("refreshToken");
-        localStorage.removeItem("user");
+        const userData = await authService.refresh();
+        setUser({ ...userData, isAdmin: userData.role === "ADMIN" });
+      } catch {
+        setUser(null);
       } finally {
         setLoading(false);
       }
     };
 
-    loadUser();
+    bootstrap();
   }, []);
 
-  return (
-    <AuthContext.Provider value={{ user, setUser, loading, navigate }}>
-      {children}
-    </AuthContext.Provider>
-  );
+  const login = useCallback(async (email, password) => {
+    const userData = await authService.login(email, password);
+    const userWithRole = { ...userData, isAdmin: userData.role === "ADMIN" };
+    setUser(userWithRole);
+    return userWithRole;
+  }, []);
+
+  const logout = useCallback(async () => {
+    await authService.logout();
+    setUser(null);
+  }, []);
+
+  const value = {
+    user,
+    loading,
+    login,
+    logout,
+    isAuthenticated: !!user,
+    isAdmin: user?.isAdmin ?? false,
+  };
+
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
